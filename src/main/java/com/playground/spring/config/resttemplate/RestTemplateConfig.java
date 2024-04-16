@@ -48,4 +48,37 @@ public class RestTemplateConfig {
         return restTemplate;
     }
 
+    @Bean
+    public RestTemplate restTemplateForTimeout() {
+        RestTemplate restTemplate = new RestTemplate();
+
+        // 인터셉터 리스트 생성
+        List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
+
+        // 첫 번째 인터셉터
+        interceptors.add(new ClientHttpRequestInterceptor() {
+            @Override
+            public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
+                System.out.println("First Interceptor: Pre-processing request");
+                ClientHttpResponse response = execution.execute(request, body);
+                System.out.println("First Interceptor: Post-processing response");
+                return response;
+            }
+        });
+
+        // 두 번째 인터셉터
+        interceptors.add(new ClientHttpRequestInterceptor() {
+            @Override
+            public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
+                System.out.println("Second Interceptor: Pre-processing request");
+                ClientHttpResponse response = execution.execute(request, body);
+                System.out.println("Second Interceptor: Post-processing response");
+                return response;
+            }
+        });
+
+        // 인터셉터 리스트를 RestTemplate에 설정
+        restTemplate.setInterceptors(interceptors);
+        return restTemplate;
+    }
 }

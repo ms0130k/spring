@@ -1,4 +1,4 @@
-package com.playground.spring.config;
+package com.playground.spring.config.resttemplate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
