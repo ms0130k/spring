@@ -1,8 +1,6 @@
 spring:
   application:
     name: spring
-  profiles:
-    active: yml1,yml2
 server:
   port: 9090
 logging:

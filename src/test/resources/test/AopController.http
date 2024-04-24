@@ -1,1 +1,22 @@
-GET localhost:9090/aop/log
+POST localhost:9090/aop/onlyrequest
+
+{
+    "name": "test",
+    "age": 20
+}
+
+###
+POST localhost:9090/aop/stringbody
+
+{
+    "name": "test",
+    "age": 20
+}
+
+###
+POST localhost:9090/aop/mapbody
+
+{
+    "name": "test",
+    "age": 20
+}

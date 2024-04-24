@@ -1,5 +1,6 @@
 package com.playground.spring.config.resttemplate;
 
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpRequest;
@@ -50,10 +51,10 @@ public class RestTemplateConfig {
 
     @Bean
     public RestTemplate restTemplateForTimeout() {
-        RestTemplate restTemplate = new RestTemplate();
+        List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
+
 
         // 인터셉터 리스트 생성
-        List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
 
         // 첫 번째 인터셉터
         interceptors.add(new ClientHttpRequestInterceptor() {
@@ -77,8 +78,9 @@ public class RestTemplateConfig {
             }
         });
 
-        // 인터셉터 리스트를 RestTemplate에 설정
-        restTemplate.setInterceptors(interceptors);
-        return restTemplate;
+        RestTemplateBuilder builder = new RestTemplateBuilder();
+
+        return builder.interceptors(interceptors)
+                .build();
     }
 }

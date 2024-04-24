@@ -9,26 +9,14 @@ import java.util.concurrent.TimeoutException;
 
 public class Main {
     public static void main(String[] args) throws ExecutionException, InterruptedException, TimeoutException {
-
-        try {
-//            CompletableFuture<String> completableFuture = new Main().createCompletableFuture(5);
-//            String s = completableFuture.get(5, TimeUnit.SECONDS);
-//            System.out.println(s);
-//
-//            CompletableFuture<String> completableFuture2 = new Main().createCompletableFuture(0);
-//            String s2 = completableFuture2.get();
-//            System.out.println(s2);
-
-            CompletableFuture<String> completableFuture3 = new Main().createCompletableFuture(7);
-            String s3 = completableFuture3.get(5, TimeUnit.SECONDS);
-            System.out.println(s3);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        } catch (TimeoutException e) {
-            System.out.println("TimeoutException: " + e.getMessage());
-        }
+        CloneTest cloneTest = new CloneTest();
+        cloneTest.name = "name";
+        cloneTest.age = 10;
+        CloneTest cloneTest1 = cloneTest.clone();
+        cloneTest1.name = "name1";
+        cloneTest1.age = 20;
+        System.out.println(cloneTest.name);
+        System.out.println(cloneTest.age);
     }
 
     private static CompletableFuture<String> createCompletableFuture(int secondsToSleep) {
@@ -43,5 +31,19 @@ public class Main {
                 return "Interrupted!";
             }
         });
+    }
+}
+
+class CloneTest implements Cloneable {
+    public String name;
+    public long age;
+
+    @Override
+    public CloneTest clone() {
+        try {
+            return (CloneTest) super.clone();
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
     }
 }
