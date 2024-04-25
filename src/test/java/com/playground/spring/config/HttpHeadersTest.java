@@ -20,7 +20,10 @@ public class HttpHeadersTest {
         assertEquals("value2", strings.get(1));
 
         headers.set("key", "value3");
+        headers.set("key2", "value9");
         assertEquals(1, headers.get("key").size());
         assertEquals("value3", headers.get("key").get(0));
+        assertEquals(1, headers.get("key2").size());
+        assertEquals("value9", headers.get("key2").get(0));
     }
 }
